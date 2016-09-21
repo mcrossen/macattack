@@ -3,7 +3,7 @@
 CXX=			g++ $(CCFLAGS)
 
 MACAPPEND= macappend.o
-LIBS=	sha1.o logger.o
+LIBS=	sha1.o logger.o utils.o
 OBJS=	$(MACAPPEND) $(LIBS)
 
 CCFLAGS= -g -Wall -std=c++11

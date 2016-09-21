@@ -10,12 +10,27 @@ static const size_t BLOCK_BYTES = BLOCK_INTS * 4;
 
 static void reset(uint32_t digest[], std::string &buffer, uint64_t &transforms)
 {
+    log("sha1", "reseting digester to standard IV");
     /* SHA1 initialization constants */
     digest[0] = 0x67452301;
     digest[1] = 0xefcdab89;
     digest[2] = 0x98badcfe;
     digest[3] = 0x10325476;
     digest[4] = 0xc3d2e1f0;
+
+    /* Reset counters */
+    buffer = "";
+    transforms = 0;
+}
+
+static void reset(uint32_t digest[], std::string &buffer, uint64_t &transforms, std::string iv)
+{
+    log("sha1", "reseting digester to custom IV");
+    digest[0] = utils::hex_to_int(iv.substr(0, 8));
+    digest[1] = utils::hex_to_int(iv.substr(8, 8));
+    digest[2] = utils::hex_to_int(iv.substr(16, 8));
+    digest[3] = utils::hex_to_int(iv.substr(24, 8));
+    digest[4] = utils::hex_to_int(iv.substr(32, 8));
 
     /* Reset counters */
     buffer = "";
@@ -203,6 +218,11 @@ SHA1::SHA1()
     reset(digest, buffer, transforms);
 }
 
+SHA1::SHA1(std::string iv)
+{
+    reset(digest, buffer, transforms, iv);
+}
+
 
 void SHA1::update(const std::string &s)
 {
@@ -233,12 +253,18 @@ void SHA1::update(std::istream &is)
 /*
  * Add padding and return the message digest.
  */
-
 std::string SHA1::final()
 {
-    /* Total number of hashed bits */
-    uint64_t total_bits = (transforms*BLOCK_BYTES + buffer.size()) * 8;
+  log("sha1", "using default padding length");
+  /* Total number of hashed bits */
+  uint64_t total_bits = (transforms*BLOCK_BYTES + buffer.size()) * 8;
+  return final(total_bits);
+}
 
+
+std::string SHA1::final(uint64_t total_bits)
+{
+    log("sha1", "finalizing digest");
     /* Padding */
     buffer += 0x80;
     size_t orig_size = buffer.size();
