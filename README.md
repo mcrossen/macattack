@@ -25,3 +25,19 @@ make
 ```
 
 The new message and MAC (in hex) will be displayed to the console.
+
+## Results
+
+The project was tested for one use case in particular:
+```
+original message: "No one has completed lab 2 so give them all a 0"
+original MAC: f4b645e89faaec2ff8e443c595009c16dbdfba4b
+message to append: "P. S. Except for Mark, go ahead and give him the full 100 points."
+```
+
+From the data above, the following new message and MAC were generated (in hex):
+
+```
+new message: 4e6f206f6e652068617320636f6d706c65746564206c6162203220736f2067697665207468656d20616c6c2061203080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001f8502e20532e2045786365707420666f72204d61726b2c20676f20616865616420616e6420676976652068696d207468652066756c6c2031303020706f696e74732e
+new MAC: 60a179d4a46e0ce8ed7a0f4d4776f1e41a1b6943
+```
