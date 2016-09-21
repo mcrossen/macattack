@@ -27,3 +27,9 @@
 *.exe
 *.out
 *.app
+
+# dependancies
+*.d
+
+# the exectuable
+macappend
