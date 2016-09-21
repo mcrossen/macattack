@@ -30,3 +30,24 @@ string utils::char_to_hex(char character) {
     return to_return;
   }
 }
+
+string utils::bin_to_hex(string bin) {
+  string to_return;
+  while (bin.length() % 4 != 0) {
+    bin = "0" + bin;
+  }
+  for (unsigned int index = bin.length(); index > 0; index-=4) {
+    string chunk;
+    if (index < 4) {
+      chunk = bin.substr(0, index);
+    } else {
+      chunk = bin.substr(index-4, 4);
+    }
+    to_return = int_to_hex(byte_to_int(chunk), 1) + to_return;
+  }
+  return to_return;
+}
+
+uint8_t utils::byte_to_int(string byte) {
+  return stoi(byte, nullptr, 2);
+}
