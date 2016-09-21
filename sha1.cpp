@@ -264,7 +264,9 @@ std::string SHA1::final()
 
 std::string SHA1::final(uint64_t total_bits)
 {
-    log("sha1", "finalizing digest");
+    stringstream debug;
+    debug << "finalizing digest with size of " << total_bits << " bits";
+    log("sha1", debug.str()); debug.str("");
     /* Padding */
     buffer += 0x80;
     size_t orig_size = buffer.size();

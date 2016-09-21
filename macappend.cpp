@@ -41,7 +41,7 @@ int main(int argc, char ** argv) {
   log("main", debug.str()); debug.str("");
   SHA1 hash(initial_mac);
   hash.update(to_append);
-  cout << "new mac: " << hash.final(initial_msg_length + initial_pad_length + to_append.length()) << endl;
+  cout << "new mac: " << hash.final(initial_msg_length + 8 + initial_pad_length + SHA1_MSG_LENGTH_SIZE + to_append.length()*8) << endl;
 
   return 0;
 }
