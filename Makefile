@@ -11,6 +11,9 @@ CCFLAGS= -g -Wall -std=c++11
 all: $(MACAPPEND) $(LIBS)
 	$(CXX) -o macappend $(MACAPPEND) $(LIBS)
 
+test: all
+	./macappend -v
+
 clean:
 	rm -f $(OBJS) $(OBJS:.o=.d)
 
