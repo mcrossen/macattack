@@ -27,21 +27,18 @@ int main(int argc, char ** argv) {
   string to_append = "P. S. Except for Mark, go ahead and give him the full 100 points.";
 
   uint64_t initial_msg_length = key_length + initial_msg.length()*8;
-  cout << "msg_length: " << initial_msg_length << endl;
-  cout << "extra length: " << ((initial_msg_length + 8 + SHA1_MSG_LENGTH_SIZE) % SHA1_BLOCK_LENGTH) << endl;
   uint64_t initial_pad_length = SHA1_BLOCK_LENGTH - ((initial_msg_length + 8 + SHA1_MSG_LENGTH_SIZE) % SHA1_BLOCK_LENGTH);
   stringstream debug;
   debug << "initial message padding: " << initial_pad_length;
   log("main", debug.str()); debug.str("");
-  debug << "new message: " << utils::string_to_hex(initial_msg) << "80";
+  cout << "new message: " << utils::string_to_hex(initial_msg) << "80";
   for (unsigned int index=0; index < initial_pad_length; index+=4) {
-    debug << "0";
+    cout << "0";
   }
-  debug << utils::int_to_hex(initial_msg_length, 64/8) << utils::string_to_hex(to_append);
-  log("main", debug.str()); debug.str("");
+  cout << utils::int_to_hex(initial_msg_length, 64/8) << utils::string_to_hex(to_append) << endl;
   SHA1 hash(initial_mac);
   hash.update(to_append);
-  cout << "new mac: " << hash.final(initial_msg_length + 8 + initial_pad_length + SHA1_MSG_LENGTH_SIZE + to_append.length()*8) << endl;
+  cout << "new MAC: " << hash.final(initial_msg_length + 8 + initial_pad_length + SHA1_MSG_LENGTH_SIZE + to_append.length()*8) << endl;
 
   return 0;
 }
