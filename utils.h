@@ -2,6 +2,7 @@
 #include <sstream>
 using namespace std;
 
+// helpful functions to handle conversion between binary, hexadecimal, integers, and strings
 namespace utils {
   uint32_t hex_to_int(string);
   string int_to_hex(unsigned int num, unsigned int pad);

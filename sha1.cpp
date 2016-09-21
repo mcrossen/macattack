@@ -1,3 +1,16 @@
+/*
+    sha1.cpp - source code of
+    ============
+    SHA-1 in C++
+    ============
+    100% Public Domain.
+    Original C Code
+        -- Steve Reid <steve@edmweb.com>
+    Small changes to fit into bglibs
+        -- Bruce Guenter <bruce@untroubled.org>
+    Translation to simpler C++ Code
+        -- Volker Grabsch <vog@notjusthosting.com>
+*/
 #include "sha1.h"
 #include <sstream>
 #include <iomanip>
@@ -23,6 +36,7 @@ static void reset(uint32_t digest[], std::string &buffer, uint64_t &transforms)
     transforms = 0;
 }
 
+// this reset is very similar to the prevoius one, except a custom IV can be used.
 static void reset(uint32_t digest[], std::string &buffer, uint64_t &transforms, std::string iv)
 {
     log("sha1", "reseting digester to custom IV");
@@ -218,6 +232,7 @@ SHA1::SHA1()
     reset(digest, buffer, transforms);
 }
 
+// this constructor uses a custom IV
 SHA1::SHA1(std::string iv)
 {
     reset(digest, buffer, transforms, iv);
@@ -261,7 +276,7 @@ std::string SHA1::final()
   return final(total_bits);
 }
 
-
+// This method was modified to allow for a passed in message length
 std::string SHA1::final(uint64_t total_bits)
 {
     stringstream debug;
